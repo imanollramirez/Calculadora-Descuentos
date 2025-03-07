@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+        body {
+            font-family: 'Poppins';
+            margin: 0;
+            padding: 0;
+            background: #0F2027; 
+            background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027); 
+            background: linear-gradient(to right, #2C5364, #203A43, #0F2027); 
+
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: #333;
+        }
+
+        .container {
+            max-width: auto;
+            height: auto;
+            margin: 23vh auto;
+            background-color: rgba(255, 255, 255, 0.692);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.671);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #000000;
+        }
+
+        .card-body {
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            height: 100%;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #297ba1;
+        }
+
+        .info {
+            padding: 20px;
+            background-color: #ffffffc2;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            height: 100%;
+        }
+
+        .btn-calc {
+            margin-top: 2%;
+            transition: all ease-in 0.5s;
+            background-color: #297ba1;
+            color: white;
+            border: none;
+        }
+
+        .btn-calc:hover {
+            transition: all ease-in 0.5s;
+            background-color: #36ace2;
+            color: white;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 0;
+            font-size: 18px;
+            color: #2C5364;
+        }
+
+        .btn-clear{
+            margin-top: 2%;
+            transition: all ease-in 0.5s;
+            background-color: #297ba1;
+            color: white;
+            border: none;
+        }
+
+        .btn-clear:hover{
+            margin-top: 2%;
+            transition: all ease-in 0.5s;
+            background-color: #36ace2;
+            color: white;
+            border: none;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="text-center">Calculadora de Descuentos</h1>
+        <div class="row">
+            <div class="col-6">
+                <div class="card flex">
+                    <div class="card-body">
+                        <form id="formulario">
+                            <div class="form">
+                                <label for="cantidad">Ingrese la cantidad:</label>
+                                <input type="number" class="form-control" id="cantidad" required>
+                            </div>
+                            <button type="submit" class="btn btn-calc">Calcular</button>
+                        </form>
+                        <div class="result text-center" id="result"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="info flex">
+                    <h5>Condiciones de Descuento</h5>
+                    <p>Si la compra es mayor o igual a 1000$</p>
+                    <p>Se aplica el 15% de descuento</p>
+                    <p>Si la compra es entre 500$ y 999$</p>
+                    <p>Se aplica el 10% de descuento</p>
+                    <p>Si la compra es menor a 500$</p>
+                    <p>Solo se aplica el 5% de descuento</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <p>Alessandro Imanol Ramírez Morán #20230065</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('formulario').addEventListener('submit', function (event) {
+    event.preventDefault();
+    const cantidad = parseFloat(document.getElementById('cantidad').value);
+    let discount = 0;
+
+    if (cantidad >= 1000) {
+        discount = 0.15; // mayor o igual a $1000 - 15%
+    } else if (cantidad >= 500 || cantidad >= 999) {
+        discount = 0.10; // entre $500 y $900 10%
+    } else {
+        discount = 0.05; // menor a $500 - 5%
+    }
+
+    const cantidadDescuento = cantidad * discount;
+    const Total = cantidad - cantidadDescuento;
+
+    document.getElementById('result').innerHTML = `
+        Descuento aplicado: $${cantidadDescuento.toFixed(2)}<br>
+        Total a pagar: $${Total.toFixed(2)}
+        <br>
+        <button id="Clear" class="btn btn-clear">Limpiar</button>
+    `;
+
+    //Investigue como asignarle el evento a un botón creado con .innherHTML
+    
+    setTimeout(() => { //Este lo que hace es espera a que exista el elemento en el DOM.
+        const clearButton = document.getElementById('Clear');
+        if (clearButton) {
+            clearButton.addEventListener('click', function () {
+                document.getElementById('result').innerHTML = ''; 
+                document.getElementById('formulario').reset();
+            });
+            
+        }
+    }, 0);
+});
+
+    </script>
+</body>
+
+</html>
